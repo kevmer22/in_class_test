@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess Higher or Lower</title>
+    <style>
+	
+	
+        bodys { font-family: Arial, sans-serif; margin: 20px; }
+        .result { margin-top: 20px; font-weight: bold; }
+		
+		body { 
+			font-family: Arial, sans-serif;
+			margin: 20px;
+			background-color:skyblue; 
+		}
+		
+        .instructions { 
+			border: 2px solid #000; 
+			padding: 20px; 
+			width:30cm;
+			background-color: lemonchiffon; 
+			text-align: center;
+		}
+		.title {
+			font-weight: bold;
+			text-align: center;
+		}
+		div {
+			text-align:center;
+		}
+		
+    </style>
+</head>
+<body>
+<!--display rules of the game -->
+<h1></h1>
+    <div class="instructions">
+        <p class="title">******* Game Instructions and Rules *******</p>
+		<p>The game is played by rolling 2 dice twice. Every player begins the game with 20 points. The object of the game is to accumulate points. </p>
+        <p>When the first roll occurs, the Roll_1 dice values and sum are set. After Roll_1, 
+		the player decides if the Roll_2 sum is likely to be over or under the Roll_1 sum. 
+		The player makes a wager based on their decision of over or under. Wagers can be from 0 to 10 points. 
+		If the player bets OVER or UNDER correctly, the player wins the amount of the wager, and that value is added to their point total. 
+		If the player bets OVER or UNDER incorrectly, the player loses points in the amount of the wager, and that value is subtracted from 
+		the player's point total.</p>
+        <P>******** Special Cases ********</p>
+        <p>If Roll_2 yields a double (e.g., 2,2 or 5,5), OR Roll_2 sum is the same as the Roll_1 sum, the round is lost, 
+		and the amount of the wager is subtracted from the player's point total. 
+		Note that the round is lost irrespective of the outcome of the over/under bet.</p>
+        And that's the name of the game - OVER UNDER DOUBLE SAME!
+    </div>
+	
+<!-- Creates the random number-->
+    <h1>Guess Higher or Lower</h1>
+    <button onclick="startGame()">Start Game</button>
+    <div class="result" id="result"></div>
+    <div id="guess-section" style="display: none;">
+        <select id="guess">
+            <option value="higher">Higher</option>
+            <option value="lower">Lower</option>
+        </select>
+        <button onclick="checkGuess()">Submit Guess</button>
+    </div>
+
+<!-- JavaScript that generates the random values, compares them, determines of correct or incorrect-->
+    <script>
+        let firstNumber, secondNumber;
+
+        function generateRandomInteger(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function startGame() {
+            firstNumber = generateRandomInteger(1, 10);
+            document.getElementById('result').innerText = `First Number: ${firstNumber}`;
+            document.getElementById('guess-section').style.display = 'block';
+        }
+
+        function checkGuess() {
+            const userGuess = document.getElementById('guess').value;
+            secondNumber = generateRandomInteger(1, 10);
+            let resultText = `First Number: ${firstNumber}, Second Number: ${secondNumber}\n`;
+
+            if ((userGuess === 'higher' && secondNumber > firstNumber) || (userGuess === 'lower' && secondNumber < firstNumber)) {
+                resultText += 'Your guess was correct!';
+            } else {
+                resultText += 'Your guess was incorrect.';
+            }
+
+            document.getElementById('result').innerText = resultText.replace(/\n/g, '<br>');
+        }
+    </script>
+</body>
+</html>
